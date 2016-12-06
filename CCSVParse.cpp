@@ -86,9 +86,9 @@ bool CCSVParse::openFile(const char* fileName)
 	pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pathKey.c_str(), "r", &bufferSize);
 	string s = (char*)pBuffer;
 	string str = s.substr(0, bufferSize);
-	SaveData = s.substr(0, bufferSize);
 	vector<string> line;
 	StringSplit(str, line, '\n');
+	PreParseDbData = line;
 	for (unsigned int i = 0; i<line.size(); ++i)
 	{
 		vector<string> field;
@@ -96,6 +96,8 @@ bool CCSVParse::openFile(const char* fileName)
 		data.push_back(field);
 		cols = max(cols, (int)field.size());
 	}
+
+	ParseDbData();
 
 	return true;
 }
@@ -181,17 +183,68 @@ void CCSVParse::ParseData(string *outData,CCSVParse* csvFile,string Name)
 	}
 }
 
-string CCSVParse::getSaveData()
+void CCSVParse::ParseDbData()
 {
-	return SaveData;
+	string CopyedStr = "";
+	string CopyStr = "";
+	int CopyCount = 0;
+	int ColCount = 0;
+
+	for (int LineCount = 0; LineCount < PreParseDbData.size(); LineCount++)
+	{
+		CopyedStr = PreParseDbData[LineCount];
+		CopyCount = 0;
+		ColCount = 0;
+		while (true)
+		{
+
+			if (CopyedStr[CopyCount] == '\r')
+			{
+				DbData[LineCount][ColCount] = CopyStr;
+				ColCount++;
+				DbData[LineCount][ColCount] = '\r';
+				ColCount++;
+				DbData[LineCount][ColCount] = '\n';
+				CopyStr = "";
+				break;
+			}
+			if (CopyedStr[CopyCount] != ',')
+			{
+				CopyStr += CopyedStr[CopyCount];
+			}
+			else
+			{
+				DbData[LineCount][ColCount] = CopyStr;
+				CopyStr = "";
+				ColCount++;
+			}
+
+			CopyCount++;
+		}
+	}
 }
 
-void CCSVParse::SetSaveData(string Data)
-{
-	SaveData = Data;
-}
+
 
 void CCSVParse::SaveDataBase(const char* fileName)
 {
+
+	string SaveData = "";
+
+	for (int unitszie = 0; unitszie < MAXUNIT_SZIE; unitszie++)
+	{
+		for (int parametersize = 0; parametersize < PARAMETER_SIZE; parametersize++)
+		{
+			if (DbData[unitszie][parametersize] != "" && DbData[unitszie][parametersize] != "\n" && DbData[unitszie][parametersize] != "\r")
+			{
+				SaveData += DbData[unitszie][parametersize] + ",";
+			}
+			else if (DbData[unitszie][parametersize] == "\n" || DbData[unitszie][parametersize] == "\r")
+			{
+				SaveData += DbData[unitszie][parametersize];
+			}
+		}
+	}
+
 	CCFileUtils::sharedFileUtils()->writeStringToFile(SaveData,fileName);
 }

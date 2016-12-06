@@ -5,6 +5,10 @@
 #include <vector>
 using namespace std;
 
+
+#define MAXUNIT_SZIE			100
+#define PARAMETER_SIZE			10 
+
 class CCSVParse
 {
 
@@ -20,9 +24,10 @@ public:
 	std::vector<std::vector<std::string>> data;
 
 private:
-	string        fieldsep;
-	string        SaveData;
-	int            cols;
+	string			    fieldsep;
+	string              DbData[MAXUNIT_SZIE][PARAMETER_SIZE];
+	int				    cols;
+	vector<string>		PreParseDbData;
 
 	void StringSplit(const string& str, vector<string>& tokens, const char& delimiters);
 	void split(vector<string>& field, string line);
@@ -34,8 +39,7 @@ public:
 	const char* getData(unsigned int rows, unsigned int cols);
 	int findColsData(int cols, const char* value);
 	void ParseData(string *outData, CCSVParse* csvFile, string Name);
-	string getSaveData();
-	void SetSaveData(string Data);
+	void ParseDbData();
 	void SaveDataBase(const char* fileName);
 
 	inline int getCols() { return cols; }
