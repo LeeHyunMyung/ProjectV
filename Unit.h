@@ -1,4 +1,7 @@
-#pragma once
+//////////////////////////
+#ifndef __C_UNIT__
+#define __C_UNIT__
+
 
 #include <iostream>
 
@@ -9,9 +12,19 @@ class Unit
 {
 public:
 	Unit();
-	~Unit();
+	int* GetParameters();
 
 private:
 
+	int mParameters[10] = {};	
 };
+
+#endif
+
+
+
+
+
+
+
 

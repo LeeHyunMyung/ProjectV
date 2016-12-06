@@ -7,7 +7,7 @@ using namespace std;
 
 
 #define MAXUNIT_SZIE			100
-#define PARAMETER_SIZE			10 
+#define PARAMETER_SIZE			12 
 
 class CCSVParse
 {
@@ -25,7 +25,7 @@ public:
 
 private:
 	string			    fieldsep;
-	string              DbData[MAXUNIT_SZIE][PARAMETER_SIZE];
+	
 	int				    cols;
 	vector<string>		PreParseDbData;
 
@@ -35,12 +35,12 @@ private:
 	int advquoted(const string& line, string& fld, int);
 
 public:
-	bool openFile(const char* fileName);
+	bool openFile(const char* fileName, string DbData[][PARAMETER_SIZE]);
 	const char* getData(unsigned int rows, unsigned int cols);
 	int findColsData(int cols, const char* value);
 	void ParseData(string *outData, CCSVParse* csvFile, string Name);
-	void ParseDbData();
-	void SaveDataBase(const char* fileName);
+	void ParseDbData(string DbData[][PARAMETER_SIZE]);
+	void SaveDataBase(const char* fileName, string DbData[][PARAMETER_SIZE]);
 
 	inline int getCols() { return cols; }
 	inline int getRows() { return data.size(); };

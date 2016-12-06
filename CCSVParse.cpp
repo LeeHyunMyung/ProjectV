@@ -1,4 +1,6 @@
-﻿#include "CCSVParse.h"
+﻿#pragma once
+
+#include "CCSVParse.h"
 
 using namespace cocos2d;
 
@@ -78,7 +80,7 @@ int CCSVParse::advquoted(const string& s, string& fld, int i)
 }
 
 //解析 CVS 文件
-bool CCSVParse::openFile(const char* fileName)
+bool CCSVParse::openFile(const char* fileName, string DbData[][PARAMETER_SIZE])
 {
 	string pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
 	unsigned char* pBuffer = nullptr;
@@ -97,7 +99,7 @@ bool CCSVParse::openFile(const char* fileName)
 		cols = max(cols, (int)field.size());
 	}
 
-	ParseDbData();
+	ParseDbData(DbData);
 
 	return true;
 }
@@ -183,7 +185,7 @@ void CCSVParse::ParseData(string *outData,CCSVParse* csvFile,string Name)
 	}
 }
 
-void CCSVParse::ParseDbData()
+void CCSVParse::ParseDbData(string DbData[][PARAMETER_SIZE])
 {
 	string CopyedStr = "";
 	string CopyStr = "";
@@ -226,7 +228,7 @@ void CCSVParse::ParseDbData()
 
 
 
-void CCSVParse::SaveDataBase(const char* fileName)
+void CCSVParse::SaveDataBase(const char* fileName, string DbData[][PARAMETER_SIZE])
 {
 
 	string SaveData = "";
