@@ -6,7 +6,7 @@ using namespace cocos2d;
 
 CCSVParse::CCSVParse(void)
 {
-	//CCFileUtils::sharedFileUtils()->
+	
 }
 
 
@@ -79,7 +79,7 @@ int CCSVParse::advquoted(const string& s, string& fld, int i)
 	return j;
 }
 
-//解析 CVS 文件
+
 bool CCSVParse::openFile(const char* fileName, string DbData[][PARAMETER_SIZE])
 {
 	string pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
@@ -104,7 +104,7 @@ bool CCSVParse::openFile(const char* fileName, string DbData[][PARAMETER_SIZE])
 	return true;
 }
 
-//获取指定行列的数据
+
 const char* CCSVParse::getData(unsigned int rows, unsigned int cols)
 {
 	if (rows<0 || rows >= data.size() || cols<0 || cols >= data[rows].size())
@@ -114,7 +114,7 @@ const char* CCSVParse::getData(unsigned int rows, unsigned int cols)
 	return data[rows][cols].c_str();
 }
 
-//获取指定数据的列下标
+
 int CCSVParse::findColsData(int cols, const char* value)
 {
 	for (unsigned int i = 0; i<data.size(); ++i)

@@ -16,10 +16,7 @@ public:
 	CCSVParse(void);
 	~CCSVParse(void);
 
-	//CCSVParse(istream& fin = cin, string sep = ",") :fieldsep(sep),cols(0)
-	//{
-
-	//}
+	
 
 	std::vector<std::vector<std::string>> data;
 

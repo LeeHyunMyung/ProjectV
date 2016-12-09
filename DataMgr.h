@@ -17,7 +17,7 @@ private:
 	DataMgr() 
 	{
 		mData = new CCSVParse();
-		mData->openFile("Book1.csv",DbData);
+		mData->openFile("UnitData.csv",DbData);
 	};
 	DataMgr(const DataMgr& other);
 
@@ -34,7 +34,7 @@ public:
 		return instance;
 	}
 
-	void SaveData(Unit* unit)
+	void SaveUnitData(Unit* unit)
 	{
 		for (int unitszie = 0; unitszie < MAXUNIT_SZIE; unitszie++)
 		{
@@ -51,28 +51,28 @@ public:
 			}
 		}
 
-		mData->SaveDataBase("Book1.csv", DbData);
-	};
-	
-	void SaveData()
-	{
-		mData->SaveDataBase("Book1.csv",DbData);
-	};
+		mData->SaveDataBase("UnitData.csv", DbData);
+	}
 
+	void SaveUnitData()
+	{
+		mData->SaveDataBase("UnitData.csv", DbData);
+	}
 
 	string IntToString(int number)
 	{
 		std::ostringstream convStream;
 		convStream << number;
 		return convStream.str();
-	};
+	}
 
 	int StringToInt(string ctr)
 	{
 		return stoi(ctr);
-	};
+	}
 
 };
+
 
 DataMgr* DataMgr::instance = nullptr;
 
