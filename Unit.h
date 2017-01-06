@@ -5,10 +5,10 @@
 
 #include <iostream>
 #include <time.h>
-
+#include <cocos2d.h>
 
 using namespace std;
-
+USING_NS_CC;
 
 #define UNIT_TYPE			0
 #define LEVEL				1
@@ -21,16 +21,22 @@ using namespace std;
 #define SKILL_TYPE2			8
 #define FIX_COUNT			9
 
-class Unit
+
+
+class Unit : Sprite
 {
 public:
 	Unit();
+	void SetImage(const char* FileName);
+	void ChangeImage(const char* FileName);
 	int* GetParameters();
-	void DoSkill();
+	Sprite* GetSprite();
+	void Release();
 
 private:
 
 	int mParameters[10] = {};	
+	Sprite* mSprite;
 
 };
 
